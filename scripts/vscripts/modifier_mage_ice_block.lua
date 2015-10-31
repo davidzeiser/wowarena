@@ -16,10 +16,10 @@ function modifier_mage_ice_block:OnDestroy()
 end
 
 function modifier_mage_ice_block:CheckState()
-	local state = {
-	[MODIFIER_STATE_STUNNED] = true,
+	local state = {	
 	[MODIFIER_STATE_INVULNERABLE] = true,
 	[MODIFIER_STATE_FROZEN] = true,
+	[MODIFIER_STATE_STUNNED] = true,
 	}
  
 	return state
@@ -28,18 +28,5 @@ end
 function modifier_mage_ice_block:IsDebuff()
 	return false
 end
+ 
 
- 
-function modifier_mage_ice_block:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-	}
- 
-	return funcs
-end
- 
---------------------------------------------------------------------------------
- 
-function modifier_mage_ice_block:GetOverrideAnimation( params )
-	return ACT_DOTA_DISABLED
-end

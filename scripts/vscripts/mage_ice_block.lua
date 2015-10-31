@@ -17,7 +17,7 @@ function mage_ice_block:OnToggle()
 		caster:AddNewModifier( caster, self, "modifier_mage_ice_block", { duration = self.ice_block_duration } )
 	
 	else
-		caster:RemoveModifierByName("modifier_mage_ice_block")
+		caster:RemoveModifierByName("modifier_mage_ice_block")		
 	end
 end
 

@@ -8,26 +8,24 @@
 	//=================================================================================================================
 	"mage_frost_bolt"
 	{
-    //HasItemInInventory 
-    //^^^
     // General
     //-------------------------------------------------------------------------------------
-    "BaseClass" "ability_datadriven"
-    "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "BaseClass"             "ability_lua"
+    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
     "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_ENEMY"
     "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
     "AbilityUnitDamageType" "DAMAGE_TYPE_MAGICAL"
+    "ScriptFile"            "mage_frost_bolt"
 
     // Stats
     //-------------------------------------------------------------------------------------
-    "AbilityCastRange" "1200"
-    "AbilityCastPoint" "0.0"
-    "AbilityCooldown" "0.5"
-    "AbilityManaCost" "50 75 100 125"
-    "AbilityDamage" "100 175 250 325"
-    "AbilityTextureName" "mage_frost_bolt"
-    //"AbilityDuration" "10"
-    "AbilityChannelTime" "1.5"   // This sets the max time the spell can be channeled
+    "AbilityCastRange"      "1200"
+    "AbilityCastPoint"      "0.0"
+    "AbilityCooldown"       "0.5"
+    "AbilityManaCost"       "50 75 100 125"
+    "AbilityDamage"         "100 175 250 325"
+    "AbilityTextureName"    "mage_frost_bolt"
+    "AbilityChannelTime"    "1.5"   // This sets the max time the spell can be channeled
 
     // Special
     //-------------------------------------------------------------------------------------
@@ -48,95 +46,21 @@
             "var_type" "FIELD_INTEGER"
             "proj_speed" "1000"
         }
-    }
-    // Precache
-    "precache"
-    {
-        //"particle" "particles/units/heroes/hero_enchantress/enchantress_impetus.vpcf"
-        "particle" "particles/econ/items/crystal_maiden/crystal_maiden_maiden_of_icewrack/maiden_freezing_field_caster_arcana1.vpcf"
-    }
-
-    // Data Driven
-    //-------------------------------------------------------------------------------------
-    "OnProjectileHitUnit"
-    {
-    	"DeleteOnHit"	"1"
-    	"ApplyModifier"
+        "04"
         {
-            "Target" "TARGET"
-            "ModifierName" "modifier_slow"
+            "var_type" "FIELD_INTEGER"
+            "damage" "100 175 250 325"
         }
-        "Damage"
+        "05"
         {
-            "Type" "DAMAGE_TYPE_MAGICAL"
-            "Damage" "%AbilityDamage"
-            "Target" "TARGET"
+            "var_type" "FIELD_INTEGER"
+            "base_crit" "10"
         }
-    }
-    "OnChannelSucceeded"
-    {
-        "TrackingProjectile"
+        "06"
         {
-            "Target" "TARGET"
-            "EffectName" "particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf"
-            "Dodgeable" "0"            
-            "MoveSpeed" "%proj_speed"
-            "SourceAttachment" "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-        } 
-    }
-    
-
-    "OnSpellStart"
-    {
-    	"ApplyModifier"
-        {
-            "Target" "CASTER"
-            "ModifierName" "modifier_channeling"
+            "var_type" "FIELD_FLOAT"
+            "spell_coef" "0.9"  //The percentage of bonus spell power added
         }
-    }
-    "OnChannelFinish"
-    {	
-    	"RemoveModifier"
-        {
-            "Target" "CASTER"
-            "ModifierName" "modifier_channeling"
-        }
-    }
-    "Modifiers" 
-    { 
-        "modifier_slow" 
-        {
-            "Duration"      "%slow_duration"
-    		"Properties"
-    		{
-        		"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"      "%slow"
-    		}
-    		"StatusEffectName"     "particles/status_fx/status_effect_frost_lich.vpcf"
-			"StatusEffectPriority" "10"
-        }
-        "modifier_channeling"
-    	{
-    		"EffectName" "particles/econ/items/crystal_maiden/crystal_maiden_maiden_of_icewrack/maiden_freezing_field_caster_arcana1.vpcf"
-    		"EffectAttachType" "follow_origin"
-        	"ThinkInterval" "1.0"
-        	"OnIntervalThink"
-        	{
-            // Looping Animation
-            	"ApplyModifier"
-            	{
-                	"ModifierName"  "channelling_animation"
-                	"Target"        "CASTER"
-            	}
-        	}
-        	
-        }
-
-    	"channelling_animation"
-    	{
-        	"IsHidden" "1"
-        	"Duration" "0.9"
-        	"OverrideAnimation" "ACT_DOTA_CAST_ABILITY_2"
-    	}
     }
 	}
 	"mage_ice_block"
