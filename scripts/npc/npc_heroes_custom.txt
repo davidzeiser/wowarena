@@ -10,7 +10,7 @@
 	{
 		"override_hero"				"npc_dota_hero_crystal_maiden"			// Hero to override
 		"Ability1"					"mage_frost_bolt"		// Ability 1
-		"Ability2"					"mage_blink_lua"		// Ability 1
+		"Ability2"					"mage_blink"		// Ability 1
 		"Ability3"					"mage_ice_block"		// Ability 1
 		"Ability4"					"mage_polymorph"
 		"AttackCapabilities" 		"DOTA_UNIT_CAP_NO_ATTACK"

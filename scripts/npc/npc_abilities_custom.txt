@@ -143,8 +143,8 @@
 	{
     // General
     //-------------------------------------------------------------------------------------
-    "BaseClass" "ability_datadriven"
-    "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED"
+    "BaseClass" "ability_lua"
+    "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 
     // Stats
     //-------------------------------------------------------------------------------------    
@@ -152,60 +152,20 @@
     "AbilityCooldown" "25"
     "AbilityManaCost" "200"
     "AbilityTextureName" "crystal_maiden_brilliance_aura"
-    "AbilityDuration" "2 3 4 5"
-    //"AbilityChannelTime" "2"   // This sets the max time the spell can be channeled
-
-    // Special
-    //-------------------------------------------------------------------------------------
-    
-    // Precache
-    "precache"
+    "AbilityDuration"    "3 4 5 6"
+    "ScriptFile" "mage_ice_block"
+    "AbilitySpecial"
     {
-        "particle" "particles/units/heroes/hero_jakiro/jakiro_ice_path_shards.vpcf"
-    }
-
-    // Data Driven
-    //-------------------------------------------------------------------------------------
-    
-    "OnAbilityPhaseStart"    
-    {
-    	"ApplyModifier"
+        "01"
         {
-            "Target" "CASTER"
-            "ModifierName" "ice_block"
+            "var_type" "FIELD_INTEGER"
+            "ice_block_duration" "3 4 5 6"
         }
-    }
-    "Modifiers" 
-    { 
-        "ice_block" 
-        {
-            "Duration"      "%AbilityDuration"
-            "IsBuff" "1"
-    		"OnCreated" 
-    		{
-        		"AttachEffect"
-        		{
-            		"Target" "CASTER"            		
-            		"EffectName" "particles/units/heroes/hero_jakiro/jakiro_ice_path_shards.vpcf"
-           			"EffectAttachType" "attach_origin"
-           			//"EffectRadius"   "100"
-           			"ControlPointEntities"
-            		{
-                		"TARGET" "attach_origin"
-                		"TARGET" "attach_origin"
-            		}
-        		}
-			}
-    		"OverrideAnimation"     "ACT_DOTA_FLAIL"
-    		"States"
-    		{
-        		"MODIFIER_STATE_INVULNERABLE" "MODIFIER_STATE_VALUE_ENABLED"
-        		"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
-    		} 
-        }
-    }
+        
+    }      
 	}
-	"mage_blink_lua"
+
+	"mage_blink"
 	{
     // General
     //-------------------------------------------------------------------------------------
@@ -218,7 +178,7 @@
     "AbilityCooldown" "24 20 16 12"
     "AbilityManaCost" "75"
     "AbilityTextureName" "antimage_blink"
-    "ScriptFile" "mage_blink_lua"
+    "ScriptFile" "mage_blink"
     "AbilitySpecial"
     {
         "01"
@@ -235,7 +195,7 @@
     {
     // General
     //-------------------------------------------------------------------------------------
-    "BaseClass" "ability_datadriven"
+    "BaseClass" "ability_lua"
     "AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
     "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_ENEMY"
     "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -248,89 +208,17 @@
     "AbilityCooldown" "10"
     "AbilityManaCost" "150 200 250 300"    
     "AbilityTextureName" "lion_voodoo"
+    "ScriptFile" "mage_polymorph"
     "AbilityDuration" "2 3 4 5"
-    "AbilityChannelTime" "2.5"   // This sets the max time the spell can be channeled
-    
-    
-
-    // Data Driven
-    //-------------------------------------------------------------------------------------
-    
-    "OnChannelSucceeded"
+    "AbilityChannelTime" "2.5"   // This sets the max time the spell can be channeled      
+    "AbilitySpecial"
     {
-        "ApplyModifier"
+        "01"
         {
-            "Target" "TARGET"
-            "ModifierName" "modifier_lion_voodoo"
-            "Duration" "%AbilityDuration"
+            "var_type" "FIELD_INTEGER"
+            "mage_polymorph_duration" "4 5 6 7"
         }
-    }
-
-    "precache"
-    {
-        //"particle" "particles/units/heroes/hero_enchantress/enchantress_impetus.vpcf"
-        "particle" "particles/econ/items/keeper_of_the_light/kotl_weapon_arcane_staff/keeper_base_attack_arcane_staff_trail.vpcf"
-        "particle" "particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
-    }
-
-    "OnSpellStart"
-    {
-        "ApplyModifier"
-        {
-            "Target" "CASTER"
-            "ModifierName" "modifier_channeling"
-        }
-    }
-    "OnChannelFinish"
-    {   
-        "RemoveModifier"
-        {
-            "Target" "CASTER"
-            "ModifierName" "modifier_channeling"
-        }
-    }
-    "Modifiers" 
-    { 
         
-        "modifier_channeling"
-        {
-            //"EffectName" "particles/econ/items/keeper_of_the_light/kotl_weapon_arcane_staff/keeper_base_attack_arcane_staff_trail.vpcf"
-            //"EffectAttachType" "follow_overhead"
-            "ThinkInterval" "1.0"
-            "OnCreated"
-            {                
-            "AttachEffect"
-            {
-                "Target" "CASTER"                   
-                "EffectName" "particles/econ/items/keeper_of_the_light/kotl_weapon_arcane_staff/keeper_base_attack_arcane_staff_trail.vpcf"
-                "EffectAttachType" "follow_overhead"
-                //"EffectRadius"   "100"
-                "ControlPointEntities"
-                {
-                    "TARGET" "attach_origin"
-                    "TARGET" "attach_origin"
-                    "TARGET" "attach_origin"
-                }
-            }
-            }
-            "OnIntervalThink"
-            {
-            // Looping Animation
-                "ApplyModifier"
-                {
-                    "ModifierName"  "channelling_animation"
-                    "Target"        "CASTER"
-                }
-            }
-            
-        }
-
-        "channelling_animation"
-        {
-            "IsHidden" "1"
-            "Duration" "0.9"
-            "OverrideAnimation" "ACT_DOTA_CAST_ABILITY_2"
-        }
-    }
+    }    
     }
 }
